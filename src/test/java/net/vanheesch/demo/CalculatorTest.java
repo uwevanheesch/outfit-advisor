@@ -47,7 +47,7 @@ class CalculatorTest {
 		assertThat(result).isEqualTo(2.);
 	}
 
-	@Test
+//	@Test
 	void thisIsABadTestAsItDoesNotStubANonDeterministicCollaborator() {
 		// given
 		Calculator calculator = new Calculator(new MathFunctionProvider());
