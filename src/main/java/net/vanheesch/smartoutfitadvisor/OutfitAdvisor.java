@@ -23,6 +23,7 @@ public class OutfitAdvisor {
 	public Outfit generateCompleteOutfit() {
 		WeatherService.WeatherInfo currentWeather = weatherService.getCurrentWeather(COLOGNE_LATITUDE, COLOGNE_LONGITUDE);
 		System.out.println(currentWeather.prettyPrint());
+
 		OutfitItem head = selectRandomItem(findOutfitPartMatchingTemperatureAndCondition(BodyPart.HEAD, currentWeather.temperature(), currentWeather.condition()));
 		OutfitItem torso = selectRandomItem(findOutfitPartMatchingTemperatureAndCondition(BodyPart.TORSO, currentWeather.temperature(), currentWeather.condition()));
 		OutfitItem legs = selectRandomItem(findOutfitPartMatchingTemperatureAndCondition(BodyPart.LEGS, currentWeather.temperature(), currentWeather.condition()));
@@ -52,7 +53,7 @@ public class OutfitAdvisor {
 
 	public OutfitItem findWarmestItem(List<OutfitItem> items) {
 		return items.stream()
-				.max(Comparator.comparingDouble(OutfitItem::maxTemp))
+				.max(Comparator.comparingInt(OutfitItem::maxTemp))
 				.orElseThrow(() -> new EmptyOutfitListException("No items in the list"));
 	}
 
