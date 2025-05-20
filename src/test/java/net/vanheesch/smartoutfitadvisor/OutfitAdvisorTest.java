@@ -63,6 +63,7 @@ class OutfitAdvisorTest {
 		);
 
 		// Act
+		// How could we do this better?
 		OutfitItem result = sut.selectRandomItem(items);
 
 		// Assert
