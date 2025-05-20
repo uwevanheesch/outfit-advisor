@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OutfitDatabaseTest {
 
@@ -19,16 +18,14 @@ public class OutfitDatabaseTest {
 	@ParameterizedTest
 	@EnumSource(value = BodyPart.class)
 	void testGetItemsReturnsItemsForKnownBodyParts(BodyPart bodyPart) {
-		assertFalse(sut.getItems(bodyPart).isEmpty(),
-				"Expected non-empty list for " + bodyPart);
+		assertThat(sut.getItems(bodyPart)).isNotEmpty();
 	}
 
 	@ParameterizedTest
 	@EnumSource(BodyPart.class)
 	void testGetItemsReturnsOnlyItemsForRequestedBodyPart(BodyPart bodyPart) {
-		sut.getItems(bodyPart).stream()
-				.filter(item -> !item.bodyPart().equals(bodyPart))
-				.findAny()
-				.ifPresent(item -> fail("Expected only items for " + bodyPart + ", but found " + item));
+		assertThat(sut.getItems(bodyPart))
+				.allMatch(item -> item.bodyPart().equals(bodyPart),
+						"Expected all items to be for " + bodyPart);
 	}
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -54,14 +55,14 @@ class WeatherServiceImplBrightSkyTest {
 		WeatherInfo result = sut.getCurrentWeather(lat, lon);
 
 		// Then
-		assertNotNull(result);
-		assertEquals(20.5, result.temperature());
-		assertEquals(5.2, result.windSpeed());
-		assertEquals(0.0, result.precipitation());
-		assertEquals(25, result.cloudCover());
-		assertEquals(WeatherService.WeatherCondition.DRY, result.condition());
-		assertEquals(15, result.sunshine30());
-		assertEquals(30, result.sunshine60());
+		assertThat(result).isNotNull();
+		assertThat(result.temperature()).isEqualTo(20.5);
+		assertThat(result.windSpeed()).isEqualTo(5.2);
+		assertThat(result.precipitation()).isEqualTo(0.0);
+		assertThat(result.cloudCover()).isEqualTo(25);
+		assertThat(result.condition()).isEqualTo(WeatherService.WeatherCondition.DRY);
+		assertThat(result.sunshine30()).isEqualTo(15);
+		assertThat(result.sunshine60()).isEqualTo(30);
 	}
 
 	@Test
@@ -74,6 +75,6 @@ class WeatherServiceImplBrightSkyTest {
 		var uri = sut.generateAPIUri(lat, lon);
 
 		// Then
-		assertEquals("https://api.brightsky.dev/current_weather?lat=52.5200&lon=13.4050", uri.toString());
+		assertThat(uri.toString()).isEqualTo("https://api.brightsky.dev/current_weather?lat=52.5200&lon=13.4050");
 	}
 }
