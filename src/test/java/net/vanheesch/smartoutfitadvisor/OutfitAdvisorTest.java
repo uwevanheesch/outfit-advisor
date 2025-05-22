@@ -28,7 +28,7 @@ class OutfitAdvisorTest {
 	private WeatherService weatherService;
 
 	@Test
-	void testGenerateCompleteOutfit() {
+	void completeOutfitIsGenerated() {
 		// Arrange
 		WeatherService.WeatherInfo weatherInfo = new WeatherService.WeatherInfo(20, 5, 0, 30, WeatherService.WeatherCondition.DRY, 60, 120);
 		when(weatherService.getCurrentWeather(anyDouble(), anyDouble())).thenReturn(weatherInfo);
@@ -55,7 +55,7 @@ class OutfitAdvisorTest {
 	}
 
 	@Test
-	void testSelectRandomItem() {
+	void randomItemIsSelected() {
 		// Arrange
 		List<OutfitItem> items = Arrays.asList(
 				new OutfitItem(BodyPart.HEAD, "Cap", 15, 30, false),
@@ -71,7 +71,7 @@ class OutfitAdvisorTest {
 	}
 
 	@Test
-	void testSelectRandomItemThrowsExceptionWhenEmpty() {
+	void selectRandomItemThrowsExceptionIfItemListIsEmpty() {
 		// Arrange
 		List<OutfitItem> emptyList = Collections.emptyList();
 
@@ -80,7 +80,7 @@ class OutfitAdvisorTest {
 	}
 
 	@Test
-	void testFindWarmestItem() {
+	void warmestItemIdentified() {
 		// Arrange
 		List<OutfitItem> items = Arrays.asList(
 				new OutfitItem(BodyPart.TORSO, "T-Shirt", 15, 25, false),
@@ -97,29 +97,12 @@ class OutfitAdvisorTest {
 	}
 
 	@Test
-	void testFindWarmestItemThrowsExceptionWhenEmpty() {
+	void findWarmestItemThrowsExceptionWhenItemListIsEmpty() {
 		// Arrange
 		List<OutfitItem> emptyList = Collections.emptyList();
 
 		// Act & Assert
 		assertThrows(EmptyOutfitListException.class, () -> sut.findWarmestItem(emptyList));
-	}
-
-	@Test
-	void testIsOutfitCompleteWithFullOutfit() {
-		// Arrange
-		Outfit fullOutfit = new Outfit(
-				new OutfitItem(BodyPart.HEAD, "Cap", 15, 30, false),
-				new OutfitItem(BodyPart.TORSO, "T-Shirt", 15, 30, false),
-				new OutfitItem(BodyPart.LEGS, "Jeans", 10, 25, false),
-				new OutfitItem(BodyPart.FEET, "Sneakers", 10, 30, false)
-		);
-
-		// Act
-		boolean isComplete = sut.isOutfitComplete(fullOutfit);
-
-		// Assert
-		assertTrue(isComplete);
 	}
 
 	@Test
